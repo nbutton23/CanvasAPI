@@ -128,8 +128,7 @@ public class UserAPI {
         callback.setIsNextPage(true);
         buildInterface(callback, null).getNextPagePeopleList(nextURL, callback);
     }
-
-    public static void getFirstPagePeople(CanvasContext canvasContext, ENROLLMENT_TYPE enrollment_type, CanvasCallback<User[]> callback) {
+    public static void getFirstPagePeople(CanvasContext canvasContext, long courseId,ENROLLMENT_TYPE enrollment_type, CanvasCallback<User[]> callback){
         if (APIHelpers.paramIsNull(callback, canvasContext)) { return; }
 
         callback.readFromCache(getFirstPagePeopleCacheFilename(canvasContext, enrollment_type));
@@ -155,6 +154,10 @@ public class UserAPI {
                 return;
         }
 
-        buildInterface(callback, canvasContext).getFirstPagePeopleListWithEnrollmentType(canvasContext.getId(), enrollmentType, callback);
+        buildInterface(callback, canvasContext).getFirstPagePeopleListWithEnrollmentType(courseId, enrollmentType, callback);
+    }
+    public static void getFirstPagePeople(CanvasContext canvasContext, ENROLLMENT_TYPE enrollment_type, CanvasCallback<User[]> callback) {
+        getFirstPagePeople(canvasContext, canvasContext.getId(), enrollment_type, callback);
+
     }
 }
